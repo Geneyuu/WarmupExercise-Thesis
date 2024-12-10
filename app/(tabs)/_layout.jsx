@@ -1,7 +1,25 @@
-import { View, Text, StatusBar } from "react-native";
+import { View, Text, StatusBar, StyleSheet } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import Ionicons from "react-native-vector-icons/Ionicons";
+
+// Define the TabIcon component
+const TabIcon = ({ name, focused, color, icon }) => {
+	return (
+		<View style={styles.iconWrapper}>
+			<Ionicons
+				name={icon}
+				size={26}
+				color={focused ? "#ABF600" : color}
+			/>
+			<Text
+				style={[styles.tabText, { color: focused ? "#ABF600" : color }]}
+			>
+				{name}
+			</Text>
+		</View>
+	);
+};
 
 const TabsLayout = () => {
 	return (
@@ -9,7 +27,7 @@ const TabsLayout = () => {
 			<StatusBar barStyle="light-content" />
 			<Tabs
 				screenOptions={{
-					tabBarShowLabel: true,
+					tabBarShowLabel: false,
 					tabBarActiveTintColor: "white",
 					tabBarInactiveTintColor: "#CDCDE0",
 					tabBarStyle: {
@@ -19,13 +37,8 @@ const TabsLayout = () => {
 						height: 80,
 						display: "flex",
 						justifyContent: "center",
-						paddingTop: "15",
+						paddingTop: 20,
 					},
-					// tabBarItemStyle: {
-					//  display: "flex",
-					//  alignItems: "center",
-					//  justifyContent: "center",
-					// },
 				}}
 			>
 				<Tabs.Screen
@@ -34,10 +47,11 @@ const TabsLayout = () => {
 						title: "Home",
 						headerShown: false,
 						tabBarIcon: ({ color, focused }) => (
-							<Ionicons
-								name={focused ? "home" : "home-outline"}
-								size={26}
-								color={focused ? "#ABF600" : "white"}
+							<TabIcon
+								icon={focused ? "home" : "home-outline"}
+								color={color}
+								name="Home"
+								focused={focused}
 							/>
 						),
 					}}
@@ -48,10 +62,11 @@ const TabsLayout = () => {
 						title: "Warm-Ups",
 						headerShown: false,
 						tabBarIcon: ({ color, focused }) => (
-							<Ionicons
-								name={focused ? "fitness" : "fitness-outline"}
-								size={26}
-								color={focused ? "#ABF600" : "white"}
+							<TabIcon
+								icon={focused ? "fitness" : "fitness-outline"}
+								color={color}
+								name="Warm-Ups"
+								focused={focused}
 							/>
 						),
 					}}
@@ -62,14 +77,15 @@ const TabsLayout = () => {
 						title: "Start",
 						headerShown: false,
 						tabBarIcon: ({ color, focused }) => (
-							<Ionicons
-								name={
+							<TabIcon
+								icon={
 									focused
 										? "basketball"
 										: "basketball-outline"
 								}
-								size={26}
-								color={focused ? "#ABF600" : "white"}
+								color={color}
+								name="Start"
+								focused={focused}
 							/>
 						),
 					}}
@@ -80,10 +96,11 @@ const TabsLayout = () => {
 						title: "Profile",
 						headerShown: false,
 						tabBarIcon: ({ color, focused }) => (
-							<Ionicons
-								name={focused ? "person" : "person-outline"}
-								size={26}
-								color={focused ? "#ABF600" : "white"}
+							<TabIcon
+								icon={focused ? "person" : "person-outline"}
+								color={color}
+								name="Profile"
+								focused={focused}
 							/>
 						),
 					}}
@@ -94,10 +111,11 @@ const TabsLayout = () => {
 						title: "Settings",
 						headerShown: false,
 						tabBarIcon: ({ color, focused }) => (
-							<Ionicons
-								name={focused ? "settings" : "settings-outline"}
-								size={26}
-								color={focused ? "#ABF600" : "white"}
+							<TabIcon
+								icon={focused ? "settings" : "settings-outline"}
+								color={color}
+								name="Settings"
+								focused={focused}
 							/>
 						),
 					}}
@@ -108,3 +126,16 @@ const TabsLayout = () => {
 };
 
 export default TabsLayout;
+
+const styles = StyleSheet.create({
+	iconWrapper: {
+		alignItems: "center",
+		justifyContent: "center",
+		width: "100",
+	},
+	tabText: {
+		marginTop: 5,
+		fontSize: 12,
+		fontFamily: "Poppins-Regular",
+	},
+});
