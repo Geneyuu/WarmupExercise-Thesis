@@ -13,9 +13,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 const TabIcon = ({ name, focused, color, icon, onPress }) => {
 	return (
 		<TouchableOpacity style={styles.iconWrapper} onPress={onPress}>
+			{focused && <View style={styles.focusedBorder} />}
 			<Ionicons
 				name={icon}
-				size={26}
+				size={27}
 				color={focused ? "#ABF600" : color}
 			/>
 			<Text
@@ -62,7 +63,7 @@ const TabsLayout = () => {
 							borderTopColor: "#232522",
 							height: 100,
 							borderTopWidth: 0,
-							paddingTop: 30,
+							paddingTop: 20,
 						},
 						tabBarIcon: ({ color, focused }) => (
 							<TabIcon
@@ -109,11 +110,19 @@ const styles = StyleSheet.create({
 	iconWrapper: {
 		alignItems: "center",
 		justifyContent: "center",
-		width: "100",
+		width: "60",
+		paddingTop: 10, // Add padding to avoid clipping with the border
 	},
 	tabText: {
 		marginTop: 5,
 		fontSize: 12,
-		fontFamily: "Poppins-Regular",
+		fontFamily: "Karla-Regular",
+	},
+	focusedBorder: {
+		width: "100%",
+		height: 3,
+		backgroundColor: "#ABF600",
+		position: "absolute",
+		top: -21,
 	},
 });

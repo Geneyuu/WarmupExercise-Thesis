@@ -17,10 +17,10 @@ const styles = {
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: "#161622",
+		backgroundColor: "white",
 	},
 	text: {
-		color: "white",
+		color: "black",
 		fontSize: 20,
 	},
 };
