@@ -1,12 +1,18 @@
-import { View, Text, StatusBar, StyleSheet } from "react-native";
+import {
+	View,
+	Text,
+	StatusBar,
+	StyleSheet,
+	TouchableOpacity,
+} from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Define the TabIcon component
-const TabIcon = ({ name, focused, color, icon }) => {
+const TabIcon = ({ name, focused, color, icon, onPress }) => {
 	return (
-		<View style={styles.iconWrapper}>
+		<TouchableOpacity style={styles.iconWrapper} onPress={onPress}>
 			<Ionicons
 				name={icon}
 				size={26}
@@ -17,7 +23,7 @@ const TabIcon = ({ name, focused, color, icon }) => {
 			>
 				{name}
 			</Text>
-		</View>
+		</TouchableOpacity>
 	);
 };
 
@@ -26,99 +32,71 @@ const TabsLayout = () => {
 		<>
 			<StatusBar barStyle="light-content" />
 			<Tabs
-				screenOptions={{
-					tabBarShowLabel: false,
-					tabBarActiveTintColor: "white",
-					tabBarInactiveTintColor: "#CDCDE0",
-					tabBarStyle: {
-						backgroundColor: "#161622",
-						borderTopWidth: 1,
-						borderTopColor: "#232522",
-						height: 80,
-						display: "flex",
-						justifyContent: "center",
-						paddingTop: 20,
-					},
+				screenOptions={({ route, navigation }) => {
+					let iconName;
+					let tabName;
+
+					if (route.name === "home") {
+						iconName = "home";
+						tabName = "Home";
+					} else if (route.name === "warmups") {
+						iconName = "fitness";
+						tabName = "Warm-Ups";
+					} else if (route.name === "startexercise") {
+						iconName = "basketball";
+						tabName = "Start";
+					} else if (route.name === "profile") {
+						iconName = "person";
+						tabName = "Profile";
+					} else if (route.name === "settings") {
+						iconName = "settings";
+						tabName = "Settings";
+					}
+
+					return {
+						tabBarShowLabel: false,
+						tabBarActiveTintColor: "white",
+						tabBarInactiveTintColor: "white",
+						tabBarStyle: {
+							backgroundColor: "#161622",
+							borderTopColor: "#232522",
+							height: 100,
+							borderTopWidth: 0,
+							paddingTop: 30,
+						},
+						tabBarIcon: ({ color, focused }) => (
+							<TabIcon
+								icon={
+									focused ? iconName : `${iconName}-outline`
+								}
+								color={color}
+								name={tabName}
+								focused={focused}
+								onPress={() => navigation.navigate(route.name)}
+							/>
+						),
+					};
 				}}
 			>
 				<Tabs.Screen
 					name="home"
-					options={{
-						title: "Home",
-						headerShown: false,
-						tabBarIcon: ({ color, focused }) => (
-							<TabIcon
-								icon={focused ? "home" : "home-outline"}
-								color={color}
-								name="Home"
-								focused={focused}
-							/>
-						),
-					}}
+					options={{ title: "Home", headerShown: false }}
 				/>
 				<Tabs.Screen
 					name="warmups"
-					options={{
-						title: "Warm-Ups",
-						headerShown: false,
-						tabBarIcon: ({ color, focused }) => (
-							<TabIcon
-								icon={focused ? "fitness" : "fitness-outline"}
-								color={color}
-								name="Warm-Ups"
-								focused={focused}
-							/>
-						),
-					}}
+					options={{ title: "Warm-Ups", headerShown: false }}
 				/>
 				<Tabs.Screen
 					name="startexercise"
-					options={{
-						title: "Start",
-						headerShown: false,
-						tabBarIcon: ({ color, focused }) => (
-							<TabIcon
-								icon={
-									focused
-										? "basketball"
-										: "basketball-outline"
-								}
-								color={color}
-								name="Start"
-								focused={focused}
-							/>
-						),
-					}}
+					options={{ title: "Start", headerShown: false }}
 				/>
 				<Tabs.Screen
 					name="profile"
-					options={{
-						title: "Profile",
-						headerShown: false,
-						tabBarIcon: ({ color, focused }) => (
-							<TabIcon
-								icon={focused ? "person" : "person-outline"}
-								color={color}
-								name="Profile"
-								focused={focused}
-							/>
-						),
-					}}
+					options={{ title: "Profile", headerShown: false }}
 				/>
 				<Tabs.Screen
 					name="settings"
-					options={{
-						title: "Settings",
-						headerShown: false,
-						tabBarIcon: ({ color, focused }) => (
-							<TabIcon
-								icon={focused ? "settings" : "settings-outline"}
-								color={color}
-								name="Settings"
-								focused={focused}
-							/>
-						),
-					}}
+					options={{ title: "Settings", headerShown: false }}
 				/>
 			</Tabs>
 		</>
